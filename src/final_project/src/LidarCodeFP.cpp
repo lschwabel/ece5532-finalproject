@@ -14,7 +14,13 @@ dis_msg = msg -> ranges;
 }
 
 void distCalc(const ros::TimerEvent & event ){
-// i want to take the avearge of the visable item
+// i want to take the avearge of the visable item.
+// take the scan and take and average. 
+for (int i = 0; i < 5; i++) {
+  cout << i << "\n";
+}
+
+
 _Float64 distance = 
 std_msgs::Float64 distmsg;
 distmsg.data = distance ;

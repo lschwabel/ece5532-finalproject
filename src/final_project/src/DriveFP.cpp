@@ -11,7 +11,7 @@ double dis_meters;
 double vela1;
 double anga1;
 // for DRC SRV
-double followDist = 20; // changeable ( want to make a dynamic reconfigure server for this)
+double followDist = 5; // changeable ( want to make a dynamic reconfigure server for this)
 double orginalcommand = 23;// changeable ( need it to pull from the Dynamic Reconfigure Server)
 // for PID controler (do not touch)
 //double kp  = .5;
@@ -57,10 +57,13 @@ void PIDCallback(const ros::TimerEvent & event ){
 // control via distancewith pid
     
     //vela1 = (vela1 + 1*(dis_meters-followDist) - 10*abs(anga1));
-    if (dis_meters < followDist) {
-   vela1 =  vela1 + (3*(error_dis) -10*abs(anga1) );
-    }else{
-    vela1 = (orginalcommand);
+    // fastest change allowed is 0.75 m/s
+    if (error_dis > 10) {
+   vela1 =  vela1+0.75;
+    }else if (error_dis < 10) {
+   vela1 =  vela1 - 0.25*(10-error_dis);
+    }else if (error_dis < 0 ) {
+    vela1 = vela1 + 0.75*error_dis;
     }
 // if vela is too large or small
     if (vela1 > orginalcommand) {
@@ -92,7 +95,7 @@ int main(int argc, char **argv)
   
   CmdVelpub = node.advertise<geometry_msgs::Twist>("/a1/cmd_vel",1);
 
-  ros::Subscriber sub1 = node.subscribe("/a1/twist", 1, A1Callback);
+  ros::Subscriber sub1 = node.subscribe("/a1/twist", 10, A1Callback);
   ros::Subscriber sub3 = node.subscribe("/dist", 1, distCallback);
 
   ros::Timer PIDtimer = node.createTimer(ros::Duration(dur_PID), PIDCallback);// write PID
