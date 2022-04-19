@@ -7,6 +7,7 @@
 
 
   <!-- create Driver Node nodes for control-->
-  <node pkg="final_project" type="DriveFP" name="DriveFP" output="screen"  /> 
+  <node pkg="final_project" type="DriveFP" name="DriveFP" output="screen" /> 
   <node pkg="final_project" type="GpsCodeFP" name="GpsCodeFP"  /> 
+   
 </launch>

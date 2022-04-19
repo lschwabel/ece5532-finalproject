@@ -62,10 +62,10 @@ int main(int argc, char **argv)
   ros::NodeHandle node;
   
  // gps subscribers
-  ros::Subscriber A1gps_fix = node.subscribe("/a1/gps/fix",1,recvA1Fix);
-  ros::Subscriber A2gps_fix = node.subscribe("/a2/gps/fix",1,recvA2Fix);
+  ros::Subscriber A1gps_fix = node.subscribe("/a1/gps/fix",10,recvA1Fix);
+  ros::Subscriber A2gps_fix = node.subscribe("/a2/gps/fix",10,recvA2Fix);
   ros::Timer Disttimer = node.createTimer(ros::Duration(0.001), distCalc);
-  pub_dist = node.advertise<std_msgs::Float64>("/dist", 1);
+  pub_dist = node.advertise<std_msgs::Float64>("/dist", 10);
   
   double ref_lat;
   double ref_lon;
