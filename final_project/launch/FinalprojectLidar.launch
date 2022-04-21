@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+
+<launch>
+  <!-- Run Premade Code for enviroment-->
+  <include file="/home/l/ros/src/final_project/launch/TwoAudibotLaneFollowing.launch" />
+  
+
+
+  <!-- create Driver Node nodes for control-->
+  <node pkg="final_project" type="DriveFP" name="DriveFP" output="screen" /> 
+  <node pkg="final_project" type="LidarCodeFP" name="LidarCodeFP"  /> 
+   
+</launch>
